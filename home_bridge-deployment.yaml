@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homebridge
+  labels:
+    app: homebridge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homebridge 
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: homebridge 
+    spec:
+      containers:
+        - name: homebridge
+          image: oznu/homebridge:latest
+          imagePullPolicy: "IfNotPresent"
+          env:
+          - name: PUID
+            value: "0"
+          - name: PGID
+            value: "0"
+          - name: TZ
+            value: "America/Denver"
+          - name: HOMEBRIDGE_CONFIG_UI
+            value: "1"
+          - name: HOMEBRIDGE_CONFIG_UI_PORT
+            value: "8581"
+          ports: 
+          - containerPort: 51827
+            name: homebridge
+            protocol: TCP
+          - containerPort: 5353
+            name: homebridge-2
+            protocol: TCP
+          volumeMounts:
+          - name: homebridge
+            mountPath: homebridge
+            subPath: homebridge
+          # - name: homebridge
+          #   mountPath: /accessories
+          #   subPath: homebridge/accessories
+      volumes:
+      - name: homebridge 
+        persistentVolumeClaim:
+          claimName: synology-homebridge
+      dnsPolicy: ClusterFirst
+      hostNetwork: true
