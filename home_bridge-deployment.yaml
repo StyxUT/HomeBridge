@@ -20,7 +20,7 @@ spec:
       containers:
         - name: homebridge
           image: oznu/homebridge:latest
-          imagePullPolicy: "IfNotPresent"
+          imagePullPolicy: "Always"
           env:
           - name: PUID
             value: "0"
