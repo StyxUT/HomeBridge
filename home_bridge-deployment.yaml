@@ -50,5 +50,5 @@ spec:
       - name: homebridge 
         persistentVolumeClaim:
           claimName: synology-homebridge
-      dnsPolicy: ClusterFirst
+#      dnsPolicy: ClusterFirst
       hostNetwork: true
