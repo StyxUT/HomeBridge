@@ -40,15 +40,15 @@ spec:
             name: homebridge-2
             protocol: TCP
           volumeMounts:
-          - name: homebridge
-            mountPath: homebridge
+          - name: k8s-pv01
+            mountPath: /homebridge
             subPath: homebridge
           # - name: homebridge
           #   mountPath: /accessories
           #   subPath: homebridge/accessories
       volumes:
-      - name: homebridge 
+      - name: k8s-pv01 
         persistentVolumeClaim:
-          claimName: synology-homebridge
+          claimName: synology-k8s-pv01
 #      dnsPolicy: ClusterFirst
       hostNetwork: true
